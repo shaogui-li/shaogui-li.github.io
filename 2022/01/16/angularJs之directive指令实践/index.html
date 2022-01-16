@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>angularJs之directive指令实践 - 桂少</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="AngularJs用户非常多的指令，满足项目开发人员的...">
+  <meta name="author" content="shaogui.li">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">angularJs之directive指令实践</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">angularJs之directive指令实践</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>January 16, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>9171</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <p>AngularJs用户非常多的指令，满足项目开发人员的绝大多数需求，今天要介绍的是其中的一个指令：directive。这货简单来说就是可以自定义html标签。数据分页，这是我们经常用到的，下面我以一个分页例子大概说下directive的用法。</p>
+<p>  一般来说，我们项目里面会有很多个页面需要分页的part，然而如果每个页面都写一大串html，这显然有点不明智，我们需要做的就是将分页的部分抽离出来，需要的时候引用就可以了。</p>
+<p>  首先是html模版部分，css样式就不提供了，在网上随便找个分页模版都可以做修改。</p>
+<p>  pager.html</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row&quot;</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-sm-4 hidden-xs&quot;</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;input-sm form-control w-sm inline v-middle&quot;</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span>Bulk action<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span>Delete selected<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span>Bulk edit<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;3&quot;</span>&gt;</span>Export<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-default&quot;</span>&gt;</span>Apply<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>    </span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-sm-4 text-center&quot;</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">small</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-muted inline m-t-sm m-b-sm&quot;</span>&gt;</span>total </span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">pager.total</span>&#125;&#125;</span><span class="xml"> items<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-sm-4 text-right text-center-xs&quot;</span>&gt;</span>    </span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;pagination pagination-sm m-t-none m-b-none&quot;</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">ng-show</span>=<span class="hljs-string">&quot;pager.index != 0&quot;</span> <span class="hljs-attr">ng-click</span>=<span class="hljs-string">&quot;pager.index &gt; 0 &amp;&amp; goIndex(0)&quot;</span> &gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:;&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-chevron-left&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">ng-show</span>=<span class="hljs-string">&quot;pager.index != 0&quot;</span> <span class="hljs-attr">ng-click</span>=<span class="hljs-string">&quot;pager.index &gt; 0 &amp;&amp; goIndex(pager.index - 1)&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:;&quot;</span>&gt;</span>prev<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">ng-repeat</span>=<span class="hljs-string">&quot;item in fatePageList&quot;</span> <span class="hljs-attr">ng-class</span>=<span class="hljs-string">&quot;&#123;current: item - 1 == pager.index&#125;&quot;</span> <span class="hljs-attr">ng-click</span>=<span class="hljs-string">&quot;(item - 1 != pager.index) &amp;&amp; goIndex(item - 1)&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:;&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">item</span>&#125;&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">ng-show</span>=<span class="hljs-string">&quot;pager.index != pager.size - 1&quot;</span> <span class="hljs-attr">ng-click</span>=<span class="hljs-string">&quot;pager.index &lt; pager.size - 1 &amp;&amp; goIndex(pager.index + 1)&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:;&quot;</span>&gt;</span>next<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">ng-show</span>=<span class="hljs-string">&quot;pager.index != pager.size - 1&quot;</span> <span class="hljs-attr">ng-click</span>=<span class="hljs-string">&quot;pager.index &lt; pager.size - 1 &amp;&amp; goIndex(pager.size - 1)&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:;&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>   我们编写一个公共的js，定义directive；</p>
+<p>  myDirective.js</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs awk">/*<br> * 自定义分页指令<br> * author: shaogui<br>*/<br>mPagerDirective = &#123; <br>    init: <span class="hljs-keyword">function</span>(APP, directiveName)&#123;<br>        APP.directive(directiveName, <span class="hljs-keyword">function</span> () &#123;<br>            return &#123;<br>                restrict: <span class="hljs-string">&#x27;EA&#x27;</span>,    <span class="hljs-regexp">//</span>E表示element元素 A表示attribute 属性<br>                templateUrl: <span class="hljs-string">&#x27;../tpl/pager.html&#x27;</span>,    <span class="hljs-regexp">//</span>引入上面的html模版，这里根据项目实际路径修改<br>                scope: &#123;<br>                    pager: <span class="hljs-string">&quot;=pageOption&quot;</span><br>                &#125;,  <span class="hljs-regexp">//</span> 继承父亲，并不隔离<br>                controller: <span class="hljs-keyword">function</span>(<span class="hljs-variable">$scope</span>, <span class="hljs-variable">$attrs</span>)&#123;<br>                    var pager = <span class="hljs-variable">$scope</span>.pager = angular.extend(&#123;<br>                        index: <span class="hljs-number">0</span>,<br>                        total: <span class="hljs-number">0</span>,<br>                        size: <span class="hljs-number">0</span>,<br>                        display: <span class="hljs-number">5</span>,<br>                        select: <span class="hljs-number">10</span>, <br>                        callback: <span class="hljs-keyword">function</span>()&#123;&#125;<br>                    &#125;, <span class="hljs-variable">$scope</span>.pager ||　&#123;&#125;);<br> <br> <br>                    pager.goIndex = <span class="hljs-variable">$scope</span>.goIndex = <span class="hljs-keyword">function</span>(index)&#123;<br>                        <span class="hljs-keyword">if</span>(index &lt;= <span class="hljs-number">0</span>)&#123; <br>                            pager.index = <span class="hljs-number">0</span>;<br>                        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(index &gt;= pager.size &amp;&amp; pager.size &gt; <span class="hljs-number">0</span>)&#123; <br>                            pager.index = pager.size - <span class="hljs-number">1</span>;<br>                        &#125;<span class="hljs-keyword">else</span>&#123;<br>                            pager.index = index;<br>                        &#125;   <br> <br>                        pager.callback(pager.index, +pager.select);<br>                    &#125;;  <br> <br>                    <span class="hljs-regexp">//</span> 每页多少条数据更变时，跑回首页<br>                    <span class="hljs-variable">$scope</span>.pagerNumbsChange = <span class="hljs-keyword">function</span>()&#123;<br>                        <span class="hljs-keyword">if</span>(pager.index === <span class="hljs-number">0</span>)&#123; <br>                            <span class="hljs-variable">$scope</span>.updatePageList(<br>                                pager.index, pager.total, pager.display<br>                            );  <br>                        &#125;<span class="hljs-keyword">else</span>&#123;<br>                            <span class="hljs-regexp">//</span> 触发<span class="hljs-variable">$scope</span>.<span class="hljs-variable">$watch</span>操作，进行更新<br>                            pager.index = <span class="hljs-number">0</span>;<br>                        &#125;   <br>                        pager.callback(<span class="hljs-number">0</span>, +pager.select);<br>                    &#125;;  <br> <br>                    <span class="hljs-regexp">//</span> 初始化一个页面列表<br>                    <span class="hljs-variable">$scope</span>.initPageList = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]; <br>                    <span class="hljs-regexp">//</span> max 实际总页数, size 显示页数<br>                    <span class="hljs-variable">$scope</span>.updatePageList = <span class="hljs-keyword">function</span>(cur, total, size)&#123;<br>                        <span class="hljs-regexp">//</span> 计算总数<br>                        var max = pager.size = Math.ceil(total / pager.select);<br> <br>                        <span class="hljs-regexp">//</span> 重新初始化页码<br>                        <span class="hljs-regexp">//</span> 当显示页数大于总页数，不移动~~<br>                        <span class="hljs-regexp">//</span> 取一半，当前页面小于一半，则不做移动<br>                        <span class="hljs-regexp">//</span> 当前页码大于一半 且 小于 max - half，则整体移动<br>                        <span class="hljs-regexp">//</span> 当前页面 大于 max - half，则不移动                                                                                                                                                                               <br>                        var cur = cur + <span class="hljs-number">1</span>, half = Math.round(size / <span class="hljs-number">2</span>); <br>                        var lastHalf = max - half;<br>                         <br>                        var start = <span class="hljs-number">1</span>, end = <span class="hljs-number">1</span>;<br>                        <span class="hljs-keyword">if</span>( max &lt;= size || cur &lt; half)&#123;<br>                            start = <span class="hljs-number">1</span>;<br>                        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cur &gt;= half &amp;&amp; cur &lt;= lastHalf)&#123;<br>                            start = cur - half + <span class="hljs-number">1</span>;<br>                        &#125;<span class="hljs-keyword">else</span>&#123;<br>                            start = max - size + <span class="hljs-number">1</span>;<br>                        &#125;<br> <br>                        <span class="hljs-regexp">//</span> 如果 实际 小于 显示，则按实际为准<br>                        end = max &lt;= size ? max : start + size - <span class="hljs-number">1</span>;<br> <br>                        <span class="hljs-variable">$scope</span>.initPageList = [];<br>                        <span class="hljs-keyword">for</span>(var i = start; i &lt;= end; i++)&#123;<br>                            <span class="hljs-variable">$scope</span>.initPageList .push(i);<br>                        &#125;<br>                    &#125;;<br> <br>                    <span class="hljs-regexp">//</span> 监听数据更新<br>                    <span class="hljs-variable">$scope</span>.<span class="hljs-variable">$watch</span>(<span class="hljs-string">&quot;pager.index + pager.total + pager.display&quot;</span>, <span class="hljs-keyword">function</span>(now, old)&#123;<br>                        <span class="hljs-variable">$scope</span>.updatePageList(<br>                            pager.index, pager.total, pager.display<br>                        );<br>                    &#125;);<br>                &#125;<br>            &#125;;<br>        &#125;);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>  接下来在控制器上注入定义的mPagerDirective</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs php">mPagerDirective.init(app, <span class="hljs-string">&quot;mypager&quot;</span>);    <span class="hljs-comment">//注入</span><br>app.config([<span class="hljs-string">&quot;<span class="hljs-subst">$stateProvider</span>&quot;</span>, <span class="hljs-string">&quot;<span class="hljs-subst">$urlRouterProvider</span>&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-variable">$stateProvider</span>, <span class="hljs-variable">$urlRouterProvider</span></span>)</span>&#123;<br>    <span class="hljs-variable">$stateProvider</span>.state(<span class="hljs-string">&#x27;app.bannerWord&#x27;</span>, &#123;<br>        url: <span class="hljs-string">&#x27;/bannerWord&#x27;</span>,                                                                                                                                                                                                                 <br>        templateUrl: <span class="hljs-string">&#x27;tpl/bannerWord/list.html&#x27;</span>,<br>        controller: <span class="hljs-string">&#x27;bannerWordListCtrl&#x27;</span><br>    &#125;)  <br>&#125;]);<br>app.controller(<span class="hljs-string">&#x27;bannerWordListCtrl&#x27;</span>, [<span class="hljs-string">&#x27;$scope&#x27;</span>, <span class="hljs-string">&#x27;$http&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-variable">$scope</span>, <span class="hljs-variable">$http</span></span>) </span>&#123;<br>    <span class="hljs-variable">$scope</span>.title = <span class="hljs-string">&quot;&quot;</span>; <br> <br>    <span class="hljs-variable">$scope</span>.update = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-variable">$scope</span>.listError = <span class="hljs-string">&quot;&quot;</span>; <br>        <span class="hljs-keyword">var</span> params = &#123; <br>            title: <span class="hljs-variable">$scope</span>.title,<br>            page_idx: <span class="hljs-variable">$scope</span>.pager.index + <span class="hljs-number">1</span>,<br>            page_size: <span class="hljs-variable">$scope</span>.pager.select<br>        &#125;;  <br>        <span class="hljs-variable">$http</span>(&#123;<br>            url: API.BannerWord.bannerWordList,<br>            method: <span class="hljs-string">&quot;GET&quot;</span>,<br>            params: params<br>        &#125;).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>)</span>&#123;<br>            <span class="hljs-keyword">var</span> data = msg.data;<br>            <span class="hljs-keyword">if</span>(data &amp;&amp; data.code == <span class="hljs-number">200</span>)&#123;<br>                <span class="hljs-variable">$scope</span>.dataList = data.data &amp;&amp; data.data.<span class="hljs-keyword">list</span> || []; <br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-variable">$scope</span>.dataList = []; <br>                <span class="hljs-variable">$scope</span>.listError = data.data;<br>            &#125;   <br>            <span class="hljs-comment">// 分页信息</span><br>            <span class="hljs-variable">$scope</span>.pager.total = data.data.pager &amp;&amp; data.data.pager.totalCount || <span class="hljs-number">0</span>;<br>        &#125;); <br>    &#125;   <br>         <br>    <span class="hljs-comment">// 分页信息</span><br>    <span class="hljs-variable">$scope</span>.pager = &#123; <br>        index: <span class="hljs-number">0</span>,<br>        total: <span class="hljs-number">0</span>,<br>        display: <span class="hljs-number">5</span>,<br>        select: <span class="hljs-number">10</span>, <br>        callback: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index, count</span>)</span>&#123;<br>            <span class="hljs-comment">// index: 页码，0开始， count: 每页多少条数据</span><br>            <span class="hljs-variable">$scope</span>.update();<br>        &#125;   <br>    &#125;;  <br> <br>    <span class="hljs-variable">$scope</span>.update();<br>    <span class="hljs-variable">$scope</span>.search = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">var</span> pager = <span class="hljs-variable">$scope</span>.pager;<br>        <span class="hljs-keyword">if</span> (pager.index &gt; <span class="hljs-number">0</span>) &#123;<br>            pager.index = <span class="hljs-number">0</span>;<br>        &#125;   <br>        <span class="hljs-variable">$scope</span>.update();<br>    &#125;<br>&#125;]);<br></code></pre></td></tr></table></figure>
+
+<p>  最后在list页加入自定义的分页标签~</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">footer</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;panel-footer&quot;</span>  <span class="hljs-attr">ng-show</span>=<span class="hljs-string">&quot;pager.size &gt;= 0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mypager</span> <span class="hljs-attr">page-option</span>=<span class="hljs-string">&quot;pager&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">mypager</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">footer</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>  效果图如下：</p>
+<p>  <img    class="lazyload" data-original="http://img.oococ.com.cn/image/20170929/1506682056583773.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">image.png</span></p>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>shaogui.li</li>
+    <li><strong>本文链接：</strong><a href="https://shaogui-li.github.io/2022/01/16/angularJs%E4%B9%8Bdirective%E6%8C%87%E4%BB%A4%E5%AE%9E%E8%B7%B5/index.html" title="https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;angularJs%E4%B9%8Bdirective%E6%8C%87%E4%BB%A4%E5%AE%9E%E8%B7%B5&#x2F;index.html">https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;angularJs%E4%B9%8Bdirective%E6%8C%87%E4%BB%A4%E5%AE%9E%E8%B7%B5&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularJs/" rel="tag">angularJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E6%AE%B5/" rel="tag">代码段</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2022/01/16/%E9%80%9A%E8%BF%87header%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6md5%E5%80%BC/"><i class="iconfont iconleft"></i>通过header信息获取文件md5值</a>
+    <a href="/2022/01/16/angularJs%E7%9A%84ng-bind-html%E6%8C%87%E4%BB%A4%E7%BB%93%E5%90%88$sce%E6%9C%8D%E5%8A%A1/">angularJs的ng-bind-html指令结合服务<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

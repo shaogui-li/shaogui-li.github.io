@@ -6,12 +6,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>编辑crontab时报错找不到vim配置 - 桂少</title>
+  <title>通过header信息获取文件md5值 - 桂少</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
   
-  <meta name="description" content="一般我们在Linux上做项目开放的时候，肯定少不了要写...">
+  <meta name="description" content="在一次项目开发中，需求是编辑原有记录时，对新上传的文件...">
   <meta name="author" content="shaogui.li">
   <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -152,7 +152,7 @@
       
       
     </div>
-    <div class="center">编辑crontab时报错找不到vim配置</div>
+    <div class="center">通过header信息获取文件md5值</div>
     <div class="right">
       <i class="iconfont iconmenu j-navbar-menu"></i>
     </div>
@@ -196,23 +196,22 @@
     <section class="head">
   <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">编辑crontab时报错找不到vim配置</h1>
+    <h1 class="head-title">通过header信息获取文件md5值</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>January 16, 2022</span>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>628</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1100</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
         
-        <p>一般我们在Linux上做项目开放的时候，肯定少不了要写一些定时脚本，这时候crontab 就是我们的好伙伴了，不过，在一次新环境的的搭建中，遇到了 # crontab -e 命令报错，大致意思就是说找不到vim配置：</p>
-<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">[root@localhost project]# crontab -e<br><span class="hljs-keyword">Error</span> detected <span class="hljs-keyword">while</span> processing /root/.vimrc:<br>line   <span class="hljs-number">49</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldenable<br>line   <span class="hljs-number">50</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldmethod=manual<br>line  <span class="hljs-number">196</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldcolumn=<span class="hljs-number">0</span><br>line  <span class="hljs-number">197</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldmethod=indent<br>line  <span class="hljs-number">198</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldlevel=<span class="hljs-number">3</span><br>line  <span class="hljs-number">199</span>:<br><span class="hljs-symbol">E518:</span> Unknown <span class="hljs-keyword">option</span>: foldenable<br>line  <span class="hljs-number">266</span>:<br><span class="hljs-symbol">E538:</span> No mouse support: mouse=a<br>Press ENTER <span class="hljs-built_in">or</span> type command <span class="hljs-keyword">to</span> <span class="hljs-keyword">continue</span><br></code></pre></td></tr></table></figure>
+        <p>在一次项目开发中，需求是编辑原有记录时，对新上传的文件与原纪录保存的文件地址指向的文件做比较，如果是新文件则记录修改原纪录的审核结果。对于文件比对，我们一般都是通过比对文件的md5值。一开始我的做法是直接使用PHP自带的md5_file()函数获取数据库原有记录的文件md5值。后来发现提交时结果返回很慢，排查发现就是md5_file()函数慢。后来问了公司的大神才知道，原来md5_file()函数相当于下载一次文件从而获得文件的md5值，所以影响了结果返回的速度。</p>
+<p>  既然md5_file()达不到我想要的效果，那就换种方式，通过fsockopen获取header中的文件md5信息。具体代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFileMd5</span>(<span class="hljs-params"><span class="hljs-variable">$url</span></span>)</span>&#123;  <br>    <span class="hljs-variable">$url</span> = parse_url(<span class="hljs-variable">$url</span>); <br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$fp</span> = @fsockopen(<span class="hljs-variable">$url</span>[<span class="hljs-string">&#x27;host&#x27;</span>],<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$url</span>[<span class="hljs-string">&#x27;port&#x27;</span>])?<span class="hljs-number">80</span>:<span class="hljs-variable">$url</span>[<span class="hljs-string">&#x27;port&#x27;</span>],<span class="hljs-variable">$error</span>))&#123; <br>        fputs(<span class="hljs-variable">$fp</span>,<span class="hljs-string">&quot;GET &quot;</span>.(<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$url</span>[<span class="hljs-string">&#x27;path&#x27;</span>])?<span class="hljs-string">&#x27;/&#x27;</span>:<span class="hljs-variable">$url</span>[<span class="hljs-string">&#x27;path&#x27;</span>]).<span class="hljs-string">&quot; HTTP/1.1\r\n&quot;</span>); <br>        fputs(<span class="hljs-variable">$fp</span>,<span class="hljs-string">&quot;Host:<span class="hljs-subst">$url</span>[host]\r\n\r\n&quot;</span>); <br>        <span class="hljs-keyword">while</span>(!feof(<span class="hljs-variable">$fp</span>))&#123; <br>            <span class="hljs-variable">$tmp</span> = fgets(<span class="hljs-variable">$fp</span>); <br>            <span class="hljs-keyword">if</span>(trim(<span class="hljs-variable">$tmp</span>) == <span class="hljs-string">&#x27;&#x27;</span>)&#123; <br>                <span class="hljs-keyword">break</span>; <br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">&#x27;/Content-MD5:(.*)/si&#x27;</span>,<span class="hljs-variable">$tmp</span>,<span class="hljs-variable">$arr</span>))&#123; <br>                <span class="hljs-keyword">return</span> trim(<span class="hljs-variable">$arr</span>[<span class="hljs-number">1</span>]); <br>            &#125;   <br>        &#125;   <br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <br>    &#125;<span class="hljs-keyword">else</span>&#123; <br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <br>    &#125;   <br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>解决方法记录如下：</p>
-<p>修改~/.bashrc 添加 export EDITOR=/usr/bin/<strong>vim</strong></p>
-<p><img    class="lazyload" data-original="http://img.oococ.com.cn/image/20170912/1505195762471932.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">image.png</span></p>
+<p>测试结果令人满意，速度一下子就上来了。</p>
 
       </section>
       <section class="extra">
@@ -220,7 +219,7 @@
           <ul class="copyright">
   
     <li><strong>本文作者：</strong>shaogui.li</li>
-    <li><strong>本文链接：</strong><a href="https://shaogui-li.github.io/2022/01/16/%E7%BC%96%E8%BE%91crontab%E6%97%B6%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0vim%E9%85%8D%E7%BD%AE/index.html" title="https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E7%BC%96%E8%BE%91crontab%E6%97%B6%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0vim%E9%85%8D%E7%BD%AE&#x2F;index.html">https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E7%BC%96%E8%BE%91crontab%E6%97%B6%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0vim%E9%85%8D%E7%BD%AE&#x2F;index.html</a></li>
+    <li><strong>本文链接：</strong><a href="https://shaogui-li.github.io/2022/01/16/%E9%80%9A%E8%BF%87header%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6md5%E5%80%BC/index.html" title="https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E9%80%9A%E8%BF%87header%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6md5%E5%80%BC&#x2F;index.html">https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E9%80%9A%E8%BF%87header%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6md5%E5%80%BC&#x2F;index.html</a></li>
     <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
   
 </ul>
@@ -241,8 +240,8 @@
 
         
   <nav class="nav">
-    <a href="/2022/01/16/%E8%A7%A3%E5%86%B3PHP%E7%94%9F%E6%88%90csv%E6%96%87%E4%BB%B6%E6%97%B6%E6%95%B0%E5%80%BC%E5%9E%8B%E8%A2%AB%E7%A7%91%E5%AD%A6%E6%B3%95/"><i class="iconfont iconleft"></i>解决PHP生成csv文件时数值型被科学法</a>
-    <a href="/2022/01/16/yum%E6%BA%90%E5%AE%89%E8%A3%85mysql5-6%E7%89%88%E6%9C%AC/">yum源安装mysql5.6版本<i class="iconfont iconright"></i></a>
+    <a href="/2022/01/16/Nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1upstream%E6%A8%A1%E5%9D%97/"><i class="iconfont iconleft"></i>Nginx负载均衡upstream模块</a>
+    <a href="/2022/01/16/angularJs%E4%B9%8Bdirective%E6%8C%87%E4%BB%A4%E5%AE%9E%E8%B7%B5/">angularJs之directive指令实践<i class="iconfont iconright"></i></a>
   </nav>
 
       </section>
