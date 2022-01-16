@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ajax获取数据出现\ufeff - 桂少</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="记一次略坑的寻bug之旅，之前有一次项目接入三方支付，...">
+  <meta name="author" content="shaogui.li">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">ajax获取数据出现\ufeff</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">ajax获取数据出现\ufeff</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>January 16, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>469</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <p>记一次略坑的寻bug之旅，之前有一次项目接入三方支付，基本按照对方给的文档和demo进行编写，进行得比较顺利，但是，有部分逻辑需要按我们原本项目的形式来改写，通过ajax拉取接口数据的时候，出现了一个诡异的情况，就是返回来的JSON数据一直无法正常识别。作为一个程序员，很自然地就按下了F12，发现返回的JSON前面多了个小红点<img    class="lazyload" data-original="http://img.baidu.com/hi/jx2/j_0012.gif" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">img</span>，鼠标移上去出现“\ufeff”，不用怀疑，这锅就是这个小红点要背起来的。</p>
+<p>  第一反应是去看看代码里面是不是有什么特殊的字符导致了，but 翻了好几次没有找到，之后便开始了漫长的百度，寻求解决。后来在豆瓣上看到一篇类似的文章，里面提供的方法是用代码批量去除BOM头（<a target="_blank" rel="noopener" href="https://www.douban.com/note/332229277/%EF%BC%89%EF%BC%8C%E6%84%9F%E8%A7%89%E7%95%A5%E9%BA%BB%E7%83%A6%E3%80%82%E4%BA%8E%E6%98%AF%E5%8F%88%E7%BF%BB%E4%BA%86%E6%8C%BA%E4%B9%85%E7%99%BE%E5%BA%A6%EF%BC%8C%E6%9C%80%E5%90%8E%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E7%AE%80%E5%8D%95%E7%9A%84%E5%8A%9E%E6%B3%95%EF%BC%8C%E5%B0%B1%E6%98%AF%E4%BD%BF%E7%94%A8NodePad++%E6%96%87%E4%BB%B6%EF%BC%8C%E6%A0%BC%E5%BC%8F--&gt;%E4%BB%A5UTF8%E6%97%A0BOM%E6%A0%BC%E5%BC%8F%E7%BC%96%E7%A0%81--&gt;%E5%8F%A6%E5%AD%98%E4%B8%BA%EF%BC%8C%E6%90%9E%E5%AE%9A~~![img](http://img.baidu.com/hi/jx2/j_0003.gif)">https://www.douban.com/note/332229277/），感觉略麻烦。于是又翻了挺久百度，最后找到一个非常简单的办法，就是使用NodePad++文件，格式--&gt;以UTF8无BOM格式编码--&gt;另存为，搞定~~![img](http://img.baidu.com/hi/jx2/j_0003.gif)</a></p>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>shaogui.li</li>
+    <li><strong>本文链接：</strong><a href="https://shaogui-li.github.io/2022/01/16/ajax%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%87%BA%E7%8E%B0-ufeff/index.html" title="https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;ajax%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%87%BA%E7%8E%B0-ufeff&#x2F;index.html">https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;ajax%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%87%BA%E7%8E%B0-ufeff&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+  <nav class="nav">
+    <a></a>
+    <a href="/2022/01/16/%E8%A7%A3%E5%86%B3PHP%E7%94%9F%E6%88%90csv%E6%96%87%E4%BB%B6%E6%97%B6%E6%95%B0%E5%80%BC%E5%9E%8B%E8%A2%AB%E7%A7%91%E5%AD%A6%E6%B3%95/">解决PHP生成csv文件时数值型被科学法<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

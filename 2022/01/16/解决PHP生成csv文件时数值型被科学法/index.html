@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>解决PHP生成csv文件时数值型被科学法 - 桂少</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="在项目开发中，经常需要做一些数据导出的功能，方便数据分...">
+  <meta name="author" content="shaogui.li">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">解决PHP生成csv文件时数值型被科学法</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">解决PHP生成csv文件时数值型被科学法</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>January 16, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>892</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <p>在项目开发中，经常需要做一些数据导出的功能，方便数据分析，一般来说我最常用的就是用PHP直接生成csv文件，浏览器直接下载下来。但是在日常业务中，经常会碰到一些长串数字，如果直接导出的话会被科学计数法，例如 1234567890123 ，生成出来会变成</p>
+<p>1.23457E+12</p>
+<p>，这就十分尴尬了。</p>
+<p>  后台网上查找资料后，找到一种方法可以避免，就是在要输出的值后面加上 “\t” 即可；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$exportStr</span> = <span class="hljs-string">&quot;标题1,标题2,标题3\n&quot;</span>;<br><span class="hljs-variable">$str</span> = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$result</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$res</span>)&#123;<br>    <span class="hljs-variable">$str</span> .= <span class="hljs-variable">$res</span>[<span class="hljs-string">&#x27;xxx&#x27;</span>] . <span class="hljs-string">&quot;,&quot;</span>;<br>    <span class="hljs-variable">$str</span> .= <span class="hljs-variable">$res</span>[<span class="hljs-string">&#x27;sss&#x27;</span>] . <span class="hljs-string">&quot;\t&quot;</span> . <span class="hljs-string">&quot;,&quot;</span>;    <span class="hljs-comment">//假设这列是会被科学计数法的 加上“\t”</span><br>    <span class="hljs-variable">$str</span> .= <span class="hljs-variable">$res</span>[<span class="hljs-string">&#x27;qqq&#x27;</span>] . <span class="hljs-string">&quot;\n&quot;</span>;<br>&#125;<br><span class="hljs-variable">$exportStr</span> = <span class="hljs-variable">$exportStr</span> . <span class="hljs-variable">$str</span>;<br>header(<span class="hljs-string">&quot;Cache-Control: public&quot;</span>);<br>header(<span class="hljs-string">&quot;Pragma: public&quot;</span>);<br>header(<span class="hljs-string">&quot;Content-type:application/vnd.ms-excel&quot;</span>);<br>header(<span class="hljs-string">&quot;Content-Disposition:attachment;filename=test.csv&quot;</span>);<br>header(<span class="hljs-string">&#x27;Content-Type:APPLICATION/OCTET-STREAM&#x27;</span>);<br><span class="hljs-variable">$result</span> = mb_convert_encoding(<span class="hljs-variable">$exportStr</span>,  <span class="hljs-string">&#x27;GBK&#x27;</span>, <span class="hljs-string">&#x27;UTF-8&#x27;</span> );<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$result</span>;<br></code></pre></td></tr></table></figure>
+
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>shaogui.li</li>
+    <li><strong>本文链接：</strong><a href="https://shaogui-li.github.io/2022/01/16/%E8%A7%A3%E5%86%B3PHP%E7%94%9F%E6%88%90csv%E6%96%87%E4%BB%B6%E6%97%B6%E6%95%B0%E5%80%BC%E5%9E%8B%E8%A2%AB%E7%A7%91%E5%AD%A6%E6%B3%95/index.html" title="https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E8%A7%A3%E5%86%B3PHP%E7%94%9F%E6%88%90csv%E6%96%87%E4%BB%B6%E6%97%B6%E6%95%B0%E5%80%BC%E5%9E%8B%E8%A2%AB%E7%A7%91%E5%AD%A6%E6%B3%95&#x2F;index.html">https:&#x2F;&#x2F;shaogui-li.github.io&#x2F;2022&#x2F;01&#x2F;16&#x2F;%E8%A7%A3%E5%86%B3PHP%E7%94%9F%E6%88%90csv%E6%96%87%E4%BB%B6%E6%97%B6%E6%95%B0%E5%80%BC%E5%9E%8B%E8%A2%AB%E7%A7%91%E5%AD%A6%E6%B3%95&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+          <section class="donate">
+  <div id="qrcode-donate">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+  <nav class="nav">
+    <a href="/2022/01/16/ajax%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%87%BA%E7%8E%B0-ufeff/"><i class="iconfont iconleft"></i>ajax获取数据出现\ufeff</a>
+    <a href="/2022/01/16/%E7%BC%96%E8%BE%91crontab%E6%97%B6%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0vim%E9%85%8D%E7%BD%AE/">编辑crontab时报错找不到vim配置<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
